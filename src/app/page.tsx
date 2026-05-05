@@ -5,10 +5,10 @@ export default function Home() {
         <p className="mb-2 text-sm uppercase tracking-widest text-neutral-500">
           Work in progress
         </p>
-        <h1 className="mb-4 text-3xl font-semibold text-neutral-900 dark:text-neutral-100">
+        <h1 className="mb-4 text-3xl font-semibold text-neutral-900">
           Hygraph Studio Editor — rebuild
         </h1>
-        <p className="text-neutral-600 dark:text-neutral-400">
+        <p className="text-neutral-600">
           A portfolio piece by Helia Vaezzadeh. Editor surface coming soon.
         </p>
       </div>
