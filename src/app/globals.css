@@ -1,17 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Brand color (indigo) - generates bg-*, text-*, border-*, ring-* */
+  --color-primary: rgb(93 87 225);
+  --color-primary-hover: rgb(70 64 185);
+  --color-primary-pressed: rgb(51 46 135);
+  --color-primary-disabled: rgb(209 208 254);
+  --color-primary-muted: rgb(243 243 255);
+
+  /* Semantic - generates all utility variants */
+  --color-success: rgb(26 123 94);
+  --color-success-muted: rgb(233 251 241);
+  --color-warning: rgb(154 96 0);
+  --color-warning-muted: rgb(253 247 220);
+  --color-danger: rgb(195 54 52);
+  --color-danger-muted: rgb(255 240 240);
+  --color-info: rgb(49 97 223);
+  --color-info-muted: rgb(230 246 255);
+
+  /* Surfaces - bg-* only */
+  --background-color-canvas: rgb(255 255 255);
+  --background-color-surface-1: rgb(249 251 255);
+  --background-color-surface-2: rgb(246 248 254);
+  --background-color-surface-5: rgb(238 240 249);
+  --background-color-surface-8: rgb(230 233 243);
+
+  /* Text hierarchy - text-* only */
+  --text-color-strong: rgb(24 27 42);
+  --text-color-soft: rgb(73 81 115);
+  --text-color-body: rgb(52 58 85);
+  --text-color-muted: rgb(94 105 147);
+  --text-color-ghost: rgb(119 130 173);
+  --text-color-disabled: rgb(148 157 192);
+
+  /* Borders - border-* only */
+  --border-color-default: rgb(208 212 229);
+  --border-color-muted: rgb(230 233 243);
+  --border-color-strong: rgb(177 184 210);
+
+  /* Font */
   --font-sans: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--background-color-canvas);
+  color: var(--text-color-body);
 }

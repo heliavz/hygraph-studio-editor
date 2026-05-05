@@ -1,17 +1,22 @@
-export default function Home() {
+import { LeftSidebar } from "@/components/editor/LeftSidebar";
+import { TopBar } from "@/components/editor/TopBar";
+
+export default function EditorPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <div className="max-w-xl text-center">
-        <p className="mb-2 text-sm uppercase tracking-widest text-neutral-500">
-          Work in progress
-        </p>
-        <h1 className="mb-4 text-3xl font-semibold text-neutral-900">
-          Hygraph Studio Editor — rebuild
-        </h1>
-        <p className="text-neutral-600">
-          A portfolio piece by Helia Vaezzadeh. Editor surface coming soon.
-        </p>
+    <div className="flex h-screen flex-col">
+      <TopBar />
+      <div className="flex flex-1 overflow-hidden">
+        <LeftSidebar />
+
+        {/* Field outline column */}
+        <div className="w-55 shrink-0 border-r border-muted bg-canvas" />
+
+        {/* Center form area */}
+        <div className="flex-1 overflow-auto bg-surface-1" />
+
+        {/* Right rail */}
+        <div className="w-55 shrink-0 border-l border-muted bg-canvas" />
       </div>
-    </main>
+    </div>
   );
 }
