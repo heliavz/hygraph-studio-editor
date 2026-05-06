@@ -4,8 +4,10 @@ import {
   resolveCategory,
   resolveCollection,
   resolveColors,
+  type Dimensions,
   type FieldDefinition,
   type LocalizedString,
+  type Weight,
 } from "@/data";
 import { AssetField } from "./AssetField";
 import { BooleanToggle } from "./BooleanToggle";
@@ -65,7 +67,12 @@ function renderInput(field: FieldDefinition) {
       return <AssetField assetId={typeof value === "string" ? value : ""} />;
 
     case "component":
-      return <ComponentField label={field.label} fieldKey={field.key} />;
+      return (
+        <ComponentField
+          label={field.label}
+          summary={synthesizeComponentSummary(field.key, value)}
+        />
+      );
 
     case "reference": {
       const items = resolveReferenceItems(field);
@@ -129,5 +136,23 @@ function getReferenceActions(field: FieldDefinition): {
       return { primary: "Add Related Products" };
     default:
       return { primary: "Add" };
+  }
+}
+
+// Baseline Hygraph displays a UUID/hash in a component's collapsed header.
+// We synthesize a human summary from the component's actual fields so
+// editors can scan for "what's in here?" without having to expand.
+function synthesizeComponentSummary(fieldKey: string, value: unknown): string {
+  switch (fieldKey) {
+    case "dimensions": {
+      const d = value as Dimensions;
+      return `${d.widthCm} × ${d.heightCm} × ${d.depthCm} cm`;
+    }
+    case "weight": {
+      const w = value as Weight;
+      return `${w.valueKg} kg`;
+    }
+    default:
+      return "";
   }
 }
