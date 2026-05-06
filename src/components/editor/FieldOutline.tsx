@@ -9,7 +9,16 @@ import {
   ToggleLeft,
   Type,
 } from "lucide-react";
-import { productFieldDefinitions, type FieldType } from "@/data";
+import {
+  getLocaleCompletionStatus,
+  LOCALES,
+  product,
+  productFieldDefinitions,
+  type FieldType,
+  type LocaleCompletionStatus,
+  type LocalizedString,
+  type Product,
+} from "@/data";
 
 const ICON_BY_TYPE: Record<FieldType, LucideIcon> = {
   text: Type,
@@ -22,6 +31,12 @@ const ICON_BY_TYPE: Record<FieldType, LucideIcon> = {
   boolean: ToggleLeft,
 };
 
+const DOT_COLOR: Record<LocaleCompletionStatus, string> = {
+  complete: "bg-success",
+  partial: "bg-warning",
+  empty: "bg-danger",
+};
+
 export function FieldOutline() {
   return (
     <nav
@@ -31,16 +46,36 @@ export function FieldOutline() {
       {productFieldDefinitions.map((field) => {
         const Icon = ICON_BY_TYPE[field.type];
         return (
-          <button
+          <a
             key={field.key}
-            type="button"
-            className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-sm text-soft hover:bg-surface-2 hover:text-strong"
+            href={`#field-${field.key}`}
+            className="flex items-center gap-2 px-4 py-1.5 text-sm text-soft hover:bg-surface-2 hover:text-strong"
           >
             <Icon className="h-4 w-4 shrink-0 text-ghost" />
-            <span className="truncate">{field.label}</span>
-          </button>
+            <span className="flex-1 truncate">{field.label}</span>
+            {field.isLocalized && <CompletionDots fieldKey={field.key} />}
+          </a>
         );
       })}
     </nav>
+  );
+}
+
+function CompletionDots({ fieldKey }: { fieldKey: keyof Product }) {
+  const value = product[fieldKey] as LocalizedString | undefined;
+  return (
+    <span className="flex shrink-0 items-center gap-1">
+      {LOCALES.map((locale) => {
+        const status = getLocaleCompletionStatus(value, locale.code);
+        return (
+          <span
+            key={locale.code}
+            className={`h-2 w-2 rounded-full ${DOT_COLOR[status]}`}
+            aria-label={`${locale.name}: ${status}`}
+            title={`${locale.name}: ${status}`}
+          />
+        );
+      })}
+    </span>
   );
 }

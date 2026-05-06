@@ -9,7 +9,10 @@ export function FormField({ field, children }: FormFieldProps) {
   const clearLabel = field.isLocalized ? "Clear all" : "Clear";
 
   return (
-    <div className="group/field space-y-3">
+    <div
+      id={`field-${field.key}`}
+      className="group/field scroll-mt-4 space-y-3"
+    >
       <div className="flex flex-wrap items-center gap-2">
         <label className="text-sm font-medium text-strong">{field.label}</label>
         {field.isTitle && <FieldPill>Title</FieldPill>}

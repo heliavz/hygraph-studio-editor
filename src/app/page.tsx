@@ -15,7 +15,7 @@ export default function EditorPage() {
           <EntryHeader />
           <div className="flex flex-1 overflow-hidden">
             <FieldOutline />
-            <div className="flex-1 overflow-auto bg-canvas">
+            <div className="flex-1 overflow-auto scroll-smooth bg-canvas">
               <EditorForm />
             </div>
             <RightRail />
