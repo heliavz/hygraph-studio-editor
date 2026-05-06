@@ -1,3 +1,4 @@
+import { EditorForm } from "@/components/editor/form/EditorForm";
 import { EntryHeader } from "@/components/editor/EntryHeader";
 import { FieldOutline } from "@/components/editor/FieldOutline";
 import { LeftSidebar } from "@/components/editor/LeftSidebar";
@@ -14,8 +15,9 @@ export default function EditorPage() {
           <EntryHeader />
           <div className="flex flex-1 overflow-hidden">
             <FieldOutline />
-            {/* Center form area */}
-            <div className="flex-1 overflow-auto bg-surface-1" />
+            <div className="flex-1 overflow-auto bg-canvas">
+              <EditorForm />
+            </div>
             <RightRail />
           </div>
         </div>
