@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { Link2, Plus, X } from "lucide-react";
 
 export interface ReferenceItem {
   id: string;
@@ -48,15 +48,17 @@ export function ReferenceField({
       <div className="flex gap-2">
         <button
           type="button"
-          className="rounded-md border border-default bg-canvas px-3 py-1.5 text-sm font-medium text-body hover:bg-surface-2"
+          className="flex items-center gap-1.5 rounded-md border border-default bg-canvas px-3 py-1.5 text-sm font-medium text-body hover:bg-surface-2"
         >
+          <Link2 className="h-3.5 w-3.5 text-muted" />
           {primaryAction}
         </button>
         {secondaryAction && (
           <button
             type="button"
-            className="rounded-md border border-default bg-canvas px-3 py-1.5 text-sm font-medium text-body hover:bg-surface-2"
+            className="flex items-center gap-1.5 rounded-md border border-default bg-canvas px-3 py-1.5 text-sm font-medium text-body hover:bg-surface-2"
           >
+            <Plus className="h-3.5 w-3.5 text-muted" />
             {secondaryAction}
           </button>
         )}

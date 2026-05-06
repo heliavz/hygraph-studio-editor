@@ -39,3 +39,9 @@ export function getLocaleCompletionStatus(
 
   return "complete";
 }
+
+export const COMPLETION_STATUS_LABEL: Record<LocaleCompletionStatus, string> = {
+  complete: "translation complete",
+  partial: "likely incomplete (much shorter than default)",
+  empty: "translation missing",
+};

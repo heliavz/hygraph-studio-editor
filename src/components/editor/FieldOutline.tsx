@@ -10,6 +10,7 @@ import {
   Type,
 } from "lucide-react";
 import {
+  COMPLETION_STATUS_LABEL,
   getLocaleCompletionStatus,
   LOCALES,
   product,
@@ -70,9 +71,9 @@ function CompletionDots({ fieldKey }: { fieldKey: keyof Product }) {
         return (
           <span
             key={locale.code}
-            className={`h-2 w-2 rounded-full ${DOT_COLOR[status]}`}
-            aria-label={`${locale.name}: ${status}`}
-            title={`${locale.name}: ${status}`}
+            className={`h-2.5 w-2.5 rounded-full ${DOT_COLOR[status]}`}
+            aria-label={`${locale.name}: ${COMPLETION_STATUS_LABEL[status]}`}
+            title={`${locale.name}: ${COMPLETION_STATUS_LABEL[status]}`}
           />
         );
       })}
