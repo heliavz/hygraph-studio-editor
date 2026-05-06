@@ -12,10 +12,18 @@ export function LocalizedTextInput({
   return (
     <div className="space-y-4">
       {LOCALES.map((locale) => (
-        <div key={locale.code} className="space-y-1.5">
-          <span className="inline-block rounded bg-surface-5 px-1.5 py-0.5 text-xs font-medium text-soft">
-            {locale.code}
-          </span>
+        <div key={locale.code} className="group/locale space-y-1.5">
+          <div className="flex items-center justify-between">
+            <span className="inline-block rounded bg-surface-5 px-1.5 py-0.5 text-xs font-medium text-soft">
+              {locale.code}
+            </span>
+            <button
+              type="button"
+              className="text-xs font-medium text-muted opacity-0 transition-opacity hover:text-strong group-hover/locale:opacity-100 group-focus-within/locale:opacity-100"
+            >
+              Clear
+            </button>
+          </div>
           {multiline ? (
             <textarea
               defaultValue={value[locale.code] ?? ""}

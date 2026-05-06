@@ -6,13 +6,21 @@ interface FormFieldProps {
 }
 
 export function FormField({ field, children }: FormFieldProps) {
+  const clearLabel = field.isLocalized ? "Clear all" : "Clear";
+
   return (
-    <div className="space-y-3">
+    <div className="group/field space-y-3">
       <div className="flex flex-wrap items-center gap-2">
         <label className="text-sm font-medium text-strong">{field.label}</label>
         {field.isTitle && <FieldPill>Title</FieldPill>}
         {field.isUnique && <FieldPill>Unique</FieldPill>}
         {field.isLocalized && <FieldPill>Localized</FieldPill>}
+        <button
+          type="button"
+          className="ml-auto text-xs font-medium text-muted opacity-0 transition-opacity hover:text-strong group-hover/field:opacity-100 group-focus-within/field:opacity-100"
+        >
+          {clearLabel}
+        </button>
       </div>
       {children}
     </div>

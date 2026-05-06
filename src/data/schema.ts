@@ -18,6 +18,7 @@ export interface FieldDefinition {
   isTitle?: boolean;
   isUnique?: boolean;
   isMultiple?: boolean;
+  enumOptions?: readonly string[];
 }
 
 export const productFieldDefinitions: FieldDefinition[] = [
@@ -44,8 +45,18 @@ export const productFieldDefinitions: FieldDefinition[] = [
   { key: "sku", label: "sku", type: "text" },
   { key: "price", label: "price", type: "number" },
   { key: "salePrice", label: "salePrice", type: "number" },
-  { key: "currency", label: "currency", type: "enum" },
-  { key: "inventoryStatus", label: "inventoryStatus", type: "enum" },
+  {
+    key: "currency",
+    label: "currency",
+    type: "enum",
+    enumOptions: ["EUR", "USD", "GBP", "SEK"],
+  },
+  {
+    key: "inventoryStatus",
+    label: "inventoryStatus",
+    type: "enum",
+    enumOptions: ["IN_STOCK", "LOW_STOCK", "OUT_OF_STOCK", "DISCONTINUED"],
+  },
   { key: "heroImageId", label: "heroImage", type: "asset" },
   { key: "dimensions", label: "dimensions", type: "component" },
   { key: "weight", label: "weight", type: "component" },
