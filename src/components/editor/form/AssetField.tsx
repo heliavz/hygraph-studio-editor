@@ -36,13 +36,13 @@ export function AssetField({ assetId }: AssetFieldProps) {
           type="button"
           className="rounded-md border border-default bg-canvas px-3 py-1.5 text-sm font-medium text-body hover:bg-surface-2"
         >
-          Replace asset
+          Link existing
         </button>
         <button
           type="button"
           className="rounded-md border border-default bg-canvas px-3 py-1.5 text-sm font-medium text-body hover:bg-surface-2"
         >
-          Upload new
+          Create new
         </button>
       </div>
     </div>

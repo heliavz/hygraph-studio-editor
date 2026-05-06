@@ -75,13 +75,14 @@ function renderInput(field: FieldDefinition) {
       );
 
     case "reference": {
+      // Improvement - Single unified verb pair regardless of single
+      // vs. multiple, populated vs. empty, or which referenced model.
       const items = resolveReferenceItems(field);
-      const { primary, secondary } = getReferenceActions(field);
       return (
         <ReferenceField
           items={items}
-          primaryAction={primary}
-          secondaryAction={secondary}
+          primaryAction="Link existing"
+          secondaryAction="Create new"
         />
       );
     }
@@ -111,31 +112,6 @@ function resolveReferenceItems(field: FieldDefinition): ReferenceItem[] {
       return []; // empty in fixture
     default:
       return [];
-  }
-}
-
-// Six different verb patterns across reference field types in baseline Hygraph.
-function getReferenceActions(field: FieldDefinition): {
-  primary: string;
-  secondary?: string;
-} {
-  switch (field.key) {
-    case "colorIds":
-      return { primary: "Add existing entries", secondary: "Create new entry" };
-    case "categoryId":
-      return {
-        primary: "Replace Category",
-        secondary: "Create & replace Category",
-      };
-    case "collectionId":
-      return {
-        primary: "Replace Collection",
-        secondary: "Create & replace Collection",
-      };
-    case "relatedProductIds":
-      return { primary: "Add Related Products" };
-    default:
-      return { primary: "Add" };
   }
 }
 
