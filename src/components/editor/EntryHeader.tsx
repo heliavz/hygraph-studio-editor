@@ -9,7 +9,7 @@ export function EntryHeader() {
         <button
           type="button"
           aria-label="Back"
-          className="rounded p-1 text-muted hover:bg-surface-2 hover:text-strong"
+          className="rounded p-1 text-muted hover:bg-surface-2 hover:cursor-pointer"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -22,14 +22,14 @@ export function EntryHeader() {
         <button
           type="button"
           aria-label="Copy entry ID"
-          className="rounded p-1 text-muted hover:bg-surface-2 hover:text-strong"
+          className="rounded p-1 text-muted hover:bg-surface-2 hover:cursor-pointer"
         >
           <Copy className="h-4 w-4" />
         </button>
         <button
           type="button"
           aria-label="More actions"
-          className="rounded p-1 text-muted hover:bg-surface-2 hover:text-strong"
+          className="rounded p-1 text-muted hover:bg-surface-2 hover:cursor-pointer"
         >
           <MoreHorizontal className="h-5 w-5" />
         </button>
@@ -37,12 +37,6 @@ export function EntryHeader() {
 
       {/* Right: contributor avatar + Save (disabled) + Publish (active) */}
       <div className="flex items-center gap-2">
-        <div
-          role="img"
-          aria-label="Entry contributor"
-          className="h-7 w-7 rounded-full bg-primary-muted"
-        />
-
         {/* Save split-button - disabled, no unsaved changes */}
         <div className="flex">
           <button
@@ -66,14 +60,14 @@ export function EntryHeader() {
         <div className="flex">
           <button
             type="button"
-            className="rounded-l-md bg-success px-3 py-1.5 text-sm font-medium text-white hover:bg-success/90"
+            className="rounded-l-md bg-success px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 transition-colors hover:cursor-pointer"
           >
             Publish
           </button>
           <button
             type="button"
             aria-label="Publish options"
-            className="rounded-r-md border-l border-white/20 bg-success px-1.5 py-1.5 text-white hover:bg-success/90"
+            className="rounded-r-md border-l border-white/20 bg-success px-1.5 py-1.5 text-white hover:bg-emerald-700 transition-colors hover:cursor-pointer"
           >
             <ChevronDown className="h-4 w-4" />
           </button>

@@ -20,7 +20,7 @@ export function FormField({ field, children }: FormFieldProps) {
         {field.isLocalized && <FieldPill>Localized</FieldPill>}
         <button
           type="button"
-          className="ml-auto text-xs font-medium text-muted opacity-0 transition-opacity hover:text-strong group-hover/field:opacity-100 group-focus-within/field:opacity-100"
+          className="ml-auto text-xs font-medium text-muted opacity-0 transition-opacity hover:text-strong group-hover/field:opacity-100 group-focus-within/field:opacity-100 hover:cursor-pointer"
         >
           {clearLabel}
         </button>

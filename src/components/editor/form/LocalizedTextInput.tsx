@@ -40,7 +40,7 @@ export function LocalizedTextInput({
               </span>
               <button
                 type="button"
-                className="text-xs font-medium text-muted opacity-0 transition-opacity hover:text-strong group-hover/locale:opacity-100 group-focus-within/locale:opacity-100"
+                className="text-xs font-medium text-muted opacity-0 transition-opacity hover:text-strong group-hover/locale:opacity-100 group-focus-within/locale:opacity-100 hover:cursor-pointer"
               >
                 Clear
               </button>

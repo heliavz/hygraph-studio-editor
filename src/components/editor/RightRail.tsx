@@ -43,13 +43,13 @@ function Tabs() {
     <div className="flex shrink-0 border-b border-muted px-4">
       <button
         type="button"
-        className="-mb-px border-b-2 border-primary px-3 py-3 text-xs font-semibold uppercase tracking-wider text-strong"
+        className="-mb-px border-b-2 border-primary px-3 py-3 text-xs font-semibold uppercase tracking-wider text-strong hover:cursor-pointer"
       >
         Info
       </button>
       <button
         type="button"
-        className="-mb-px border-b-2 border-transparent px-3 py-3 text-xs font-semibold uppercase tracking-wider text-muted hover:text-strong"
+        className="-mb-px border-b-2 border-transparent px-3 py-3 text-xs font-semibold uppercase tracking-wider text-muted hover:text-strong hover:cursor-pointer"
       >
         Comments
       </button>
@@ -147,13 +147,13 @@ function LocalizationsSection({
                 ? "Switch to side-by-side view"
                 : "Switch to stacked view"
             }
-            className="rounded px-1.5 py-0.5 text-sm font-medium text-muted hover:bg-surface-2 hover:text-strong"
+            className="rounded px-1.5 py-0.5 text-sm font-medium text-muted hover:bg-surface-2 transition-colors hover:cursor-pointer"
           >
             {viewMode === "stacked" ? "↔" : "↕"}
           </button>
           <button
             type="button"
-            className="text-sm text-primary hover:underline"
+            className="text-sm text-primary hover:underline transition-colors hover:cursor-pointer"
           >
             Hide all
           </button>
@@ -174,7 +174,7 @@ function LocalizationsSection({
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2">
-                  <Eye className="h-4 w-4 shrink-0 text-muted" />
+                  <Eye className="h-4 w-4 shrink-0 text-muted hover:bg-surface-2 rounded-md transition-colors hover:cursor-pointer" />
                   <span className="truncate text-sm font-medium text-strong">
                     {locale.name}
                   </span>
@@ -191,7 +191,7 @@ function LocalizationsSection({
                     aria-label={`Remove ${locale.name} localization`}
                     className="rounded p-1 text-muted hover:bg-surface-2 hover:text-strong"
                   >
-                    <Trash2 className="h-3.5 w-3.5" />
+                    <Trash2 className="h-3.5 w-3.5 hover:bg-surface-2 rounded-md transition-colors hover:cursor-pointer" />
                   </button>
                 </div>
               </div>
@@ -249,13 +249,13 @@ function UpgradesSection() {
         type="button"
         onClick={() => setIsExpanded((v) => !v)}
         aria-expanded={isExpanded}
-        className="flex w-full items-center justify-between"
+        className="flex w-full items-center justify-between hover:cursor-pointer"
       >
         <SectionHeader>Upgrade to unlock</SectionHeader>
         {isExpanded ? (
-          <ChevronDown className="h-3.5 w-3.5 text-muted" />
+          <ChevronDown className="h-3.5 w-3.5 text-muted hover:cursor-pointer" />
         ) : (
-          <ChevronRight className="h-3.5 w-3.5 text-muted" />
+          <ChevronRight className="h-3.5 w-3.5 text-muted hover:cursor-pointer" />
         )}
       </button>
       {isExpanded && (

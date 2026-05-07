@@ -52,12 +52,12 @@ export function EditorForm({
               type="button"
               onClick={() => onToggleSection(section.id)}
               aria-expanded={!isCollapsed}
-              className="mb-5 flex w-full items-center gap-2 border-b border-muted pb-2 text-left"
+              className="mb-5 flex w-full items-center gap-2 border-b border-muted pb-2 text-left hover:cursor-pointer"
             >
               {isCollapsed ? (
-                <ChevronRight className="h-4 w-4 text-muted" />
+                <ChevronRight className="h-4 w-4 text-muted hover:cursor-pointer" />
               ) : (
-                <ChevronDown className="h-4 w-4 text-muted" />
+                <ChevronDown className="h-4 w-4 text-muted hover:cursor-pointer" />
               )}
               <h2 className="text-xs font-semibold uppercase tracking-wider text-strong">
                 {section.label}

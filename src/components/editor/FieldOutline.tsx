@@ -56,7 +56,7 @@ export function FieldOutline({
   return (
     <nav
       aria-label="Field outline"
-      className="w-55 shrink-0 overflow-y-auto border-r border-muted bg-canvas"
+      className="w-60 overflow-y-auto border-r border-muted bg-canvas"
     >
       {FIELD_SECTIONS.map((section) => {
         const fields = productFieldDefinitions.filter(
@@ -69,7 +69,7 @@ export function FieldOutline({
               type="button"
               onClick={() => onToggleSection(section.id)}
               aria-expanded={!isCollapsed}
-              className="flex w-full items-center gap-2 bg-surface-1 px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-wider text-muted hover:bg-surface-2 hover:text-strong"
+              className="flex w-full items-center gap-2 bg-surface-1 px-3 py-2 text-left text-[11px] font-semibold uppercase tracking-wider text-muted hover:bg-surface-2 transition-colors hover:cursor-pointer"
             >
               {isCollapsed ? (
                 <ChevronRight className="h-4 w-4 shrink-0" />

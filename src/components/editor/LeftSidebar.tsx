@@ -46,7 +46,7 @@ export function LeftSidebar() {
               className={`flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors ${
                 item.active
                   ? "bg-primary-muted font-medium text-primary"
-                  : "text-soft hover:bg-surface-2 hover:text-strong"
+                  : "text-soft hover:bg-surface-2 transition-colors hover:cursor-pointer"
               }`}
             >
               <Icon className="h-5 w-5" />
@@ -64,7 +64,7 @@ export function LeftSidebar() {
             <button
               key={item.label}
               type="button"
-              className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm text-soft hover:bg-surface-2 hover:text-strong"
+              className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm text-soft hover:bg-surface-2 transition-colors hover:cursor-pointer"
             >
               <Icon className="h-5 w-5" />
               {item.label}
