@@ -1,5 +1,12 @@
-import { ExternalLink, Eye, PanelRightClose, Trash2 } from "lucide-react";
-import { LOCALES, product } from "@/data";
+import { ExternalLink, Eye, Trash2 } from "lucide-react";
+import {
+  getLocaleCompletionStatus,
+  LOCALES,
+  product,
+  productFieldDefinitions,
+  type LocaleCode,
+  type LocalizedString,
+} from "@/data";
 
 export function RightRail() {
   return (
@@ -18,14 +25,7 @@ export function RightRail() {
 
 function Tabs() {
   return (
-    <div className="flex shrink-0 items-center gap-1 border-b border-muted px-2">
-      <button
-        type="button"
-        aria-label="Collapse panel"
-        className="rounded-full p-1 text-muted hover:bg-surface-2 hover:text-strong"
-      >
-        <PanelRightClose className="h-4 w-4" />
-      </button>
+    <div className="flex shrink-0 border-b border-muted px-4">
       <button
         type="button"
         className="-mb-px border-b-2 border-primary px-3 py-3 text-xs font-semibold uppercase tracking-wider text-strong"
@@ -120,6 +120,21 @@ function StagesSection() {
 }
 
 function LocalizationsSection() {
+  const localizedFields = productFieldDefinitions.filter((f) => f.isLocalized);
+
+  function getCompletionCounts(localeCode: LocaleCode) {
+    const statuses = localizedFields.map((f) => {
+      const value = product[f.key] as LocalizedString | undefined;
+      return getLocaleCompletionStatus(value, localeCode);
+    });
+    return {
+      complete: statuses.filter((s) => s === "complete").length,
+      partial: statuses.filter((s) => s === "partial").length,
+      empty: statuses.filter((s) => s === "empty").length,
+      total: localizedFields.length,
+    };
+  }
+
   return (
     <section className="border-b border-muted px-4 py-4">
       <div className="flex items-center justify-between">
@@ -128,35 +143,91 @@ function LocalizationsSection() {
           Hide all
         </button>
       </div>
+
       <ul className="mt-3 space-y-2">
-        {LOCALES.map((locale) => (
-          <li
-            key={locale.code}
-            className="flex items-center justify-between gap-2 rounded-md border border-default px-3 py-2 text-sm"
-          >
-            <div className="flex min-w-0 items-center gap-2">
-              <Eye className="h-4 w-4 shrink-0 text-muted" />
-              <span className="truncate font-medium text-strong">
-                {locale.name}
-              </span>
-              {locale.isDefault && (
-                <span className="text-muted">(default)</span>
-              )}
-            </div>
-            <div className="flex shrink-0 items-center gap-1">
-              <span className="rounded bg-primary-muted px-1.5 py-0.5 text-xs font-medium text-primary">
-                {locale.code}
-              </span>
-              <button
-                type="button"
-                aria-label={`Remove ${locale.name} localization`}
-                className="rounded p-1 text-muted hover:bg-surface-2 hover:text-strong"
+        {LOCALES.map((locale) => {
+          const { complete, partial, empty, total } = getCompletionCounts(
+            locale.code,
+          );
+          const allComplete = complete === total;
+
+          return (
+            <li
+              key={locale.code}
+              className="rounded-md border border-default p-3"
+            >
+              {/* Locale identity row */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex min-w-0 items-center gap-2">
+                  <Eye className="h-4 w-4 shrink-0 text-muted" />
+                  <span className="truncate text-sm font-medium text-strong">
+                    {locale.name}
+                  </span>
+                  {locale.isDefault && (
+                    <span className="text-sm text-muted">(default)</span>
+                  )}
+                </div>
+                <div className="flex shrink-0 items-center gap-1">
+                  <span className="rounded bg-primary-muted px-1.5 py-0.5 text-xs font-medium text-primary">
+                    {locale.code}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label={`Remove ${locale.name} localization`}
+                    className="rounded p-1 text-muted hover:bg-surface-2 hover:text-strong"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Completion bar - green/amber segments, gray background = missing */}
+              <div
+                className="mt-2.5 flex h-1.5 w-full overflow-hidden rounded-full bg-surface-5"
+                role="progressbar"
+                aria-label={`${locale.name} translation progress`}
+                aria-valuenow={complete}
+                aria-valuemin={0}
+                aria-valuemax={total}
               >
-                <Trash2 className="h-4 w-4" />
-              </button>
-            </div>
-          </li>
-        ))}
+                <div
+                  className="bg-success transition-all"
+                  style={{ width: `${(complete / total) * 100}%` }}
+                />
+                <div
+                  className="bg-warning transition-all"
+                  style={{ width: `${(partial / total) * 100}%` }}
+                />
+                {/* Remaining width stays surface-5 (background) - represents empty */}
+              </div>
+
+              {/* Completion label */}
+              <p className="mt-1.5 text-xs">
+                {allComplete ? (
+                  <span className="text-success">
+                    All {total} fields translated
+                  </span>
+                ) : (
+                  <span className="text-muted">
+                    <span className="text-success">{complete} complete</span>
+                    {partial > 0 && (
+                      <>
+                        {" · "}
+                        <span className="text-warning">{partial} partial</span>
+                      </>
+                    )}
+                    {empty > 0 && (
+                      <>
+                        {" · "}
+                        {empty} missing
+                      </>
+                    )}
+                  </span>
+                )}
+              </p>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
@@ -167,12 +238,15 @@ function VersionsSection() {
     <section className="border-b border-muted px-4 py-4">
       <SectionHeader>Versions</SectionHeader>
       <p className="mt-3 text-sm text-soft">
-        This feature is not available in your plan, please{" "}
-        <a href="#" className="text-primary hover:underline">
-          upgrade
-        </a>
-        <ExternalLink className="ml-1 inline h-3 w-3 text-primary" />
+        This feature is not available in your current plan.
       </p>
+
+      <a
+        href="#"
+        className="mt-2 inline-flex items-center gap-1 text-sm text-primary hover:underline"
+      >
+        Learn more <ExternalLink className="h-3 w-3" />
+      </a>
     </section>
   );
 }
@@ -214,7 +288,6 @@ function PreviewSection() {
   );
 }
 
-// "DD Mon YYYY, HH:MM" UTC, matching Hygraph's display format.
 function formatDate(iso: string): string {
   const date = new Date(iso);
   const day = String(date.getUTCDate()).padStart(2, "0");
