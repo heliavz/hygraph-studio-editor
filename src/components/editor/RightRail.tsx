@@ -1,6 +1,13 @@
 "use client";
 
-import { ExternalLink, Eye, Trash2 } from "lucide-react";
+import { useState } from "react";
+import {
+  ChevronDown,
+  ChevronRight,
+  ExternalLink,
+  Eye,
+  Trash2,
+} from "lucide-react";
 import {
   getLocaleCompletionStatus,
   LOCALES,
@@ -20,14 +27,12 @@ export function RightRail({ viewMode, onToggleViewMode }: RightRailProps) {
     <aside className="flex w-70 shrink-0 flex-col overflow-y-auto border-l border-muted bg-canvas">
       <Tabs />
       <EntryInfoSection />
-      <ScheduleSection />
       <StagesSection />
       <LocalizationsSection
         viewMode={viewMode}
         onToggleViewMode={onToggleViewMode}
       />
-      <VersionsSection />
-      <VariantsSection />
+      <UpgradesSection />
       <PreviewSection />
     </aside>
   );
@@ -92,28 +97,6 @@ function EntryInfoSection() {
           </dd>
         </div>
       </dl>
-    </section>
-  );
-}
-
-function ScheduleSection() {
-  return (
-    <section className="border-b border-muted px-4 py-4">
-      <SectionHeader>Schedule</SectionHeader>
-      <p className="mt-3 text-sm text-soft">
-        This feature is available only in our custom plans, please{" "}
-        <a href="#" className="text-primary hover:underline">
-          upgrade
-        </a>
-        <ExternalLink className="ml-1 inline h-3 w-3 text-primary" />
-      </p>
-
-      <a
-        href="#"
-        className="mt-2 inline-flex items-center gap-1 text-sm text-primary hover:underline"
-      >
-        Learn more <ExternalLink className="h-3 w-3" />
-      </a>
     </section>
   );
 }
@@ -257,38 +240,49 @@ function LocalizationsSection({
   );
 }
 
-function VersionsSection() {
+function UpgradesSection() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <section className="border-b border-muted px-4 py-4">
-      <SectionHeader>Versions</SectionHeader>
-      <p className="mt-3 text-sm text-soft">
-        This feature is not available in your current plan.
-      </p>
-
-      <a
-        href="#"
-        className="mt-2 inline-flex items-center gap-1 text-sm text-primary hover:underline"
+      <button
+        type="button"
+        onClick={() => setIsExpanded((v) => !v)}
+        aria-expanded={isExpanded}
+        className="flex w-full items-center justify-between"
       >
-        Learn more <ExternalLink className="h-3 w-3" />
-      </a>
-    </section>
-  );
-}
-
-function VariantsSection() {
-  return (
-    <section className="border-b border-muted px-4 py-4">
-      <SectionHeader>Variants</SectionHeader>
-      <p className="mt-3 text-sm text-soft">
-        Unlock the Variants feature with our Enterprise plans.
-      </p>
-
-      <a
-        href="#"
-        className="mt-2 inline-flex items-center gap-1 text-sm text-primary hover:underline"
-      >
-        Upgrade now or learn more <ExternalLink className="h-3 w-3" />
-      </a>
+        <SectionHeader>Upgrade to unlock</SectionHeader>
+        {isExpanded ? (
+          <ChevronDown className="h-3.5 w-3.5 text-muted" />
+        ) : (
+          <ChevronRight className="h-3.5 w-3.5 text-muted" />
+        )}
+      </button>
+      {isExpanded && (
+        <ul className="mt-3 space-y-2 text-sm">
+          <li>
+            <span className="font-medium text-strong">Schedule publishing</span>
+            <span className="text-soft"> - </span>
+            <a href="#" className="text-primary hover:underline">
+              upgrade
+            </a>
+          </li>
+          <li>
+            <span className="font-medium text-strong">Content versions</span>
+            <span className="text-soft"> - </span>
+            <a href="#" className="text-primary hover:underline">
+              upgrade
+            </a>
+          </li>
+          <li>
+            <span className="font-medium text-strong">Variants</span>
+            <span className="text-soft"> - </span>
+            <a href="#" className="text-primary hover:underline">
+              upgrade
+            </a>
+          </li>
+        </ul>
+      )}
     </section>
   );
 }
