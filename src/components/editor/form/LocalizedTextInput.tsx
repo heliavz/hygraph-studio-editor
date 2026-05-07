@@ -15,14 +15,18 @@ const CHIP_CLASSES: Record<LocaleCompletionStatus, string> = {
 interface LocalizedTextInputProps {
   value: LocalizedString;
   multiline?: boolean;
+  viewMode?: "stacked" | "side-by-side";
 }
 
 export function LocalizedTextInput({
   value,
   multiline = false,
+  viewMode = "stacked",
 }: LocalizedTextInputProps) {
+  const isSideBySide = viewMode === "side-by-side";
+
   return (
-    <div className="space-y-4">
+    <div className={isSideBySide ? "grid grid-cols-2 gap-3" : "space-y-4"}>
       {LOCALES.map((locale) => {
         const status = getLocaleCompletionStatus(value, locale.code);
         return (
@@ -44,7 +48,7 @@ export function LocalizedTextInput({
             {multiline ? (
               <textarea
                 defaultValue={value[locale.code] ?? ""}
-                rows={5}
+                rows={isSideBySide ? 8 : 5}
                 className="block w-full rounded-md border border-default bg-canvas px-3 py-2 text-sm text-strong placeholder:text-ghost focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             ) : (

@@ -13,18 +13,21 @@ export default function EditorPage() {
   const [collapsedSections, setCollapsedSections] = useState<Set<FieldSection>>(
     new Set(),
   );
+  const [viewMode, setViewMode] = useState<"stacked" | "side-by-side">(
+    "stacked",
+  );
 
   const toggleSection = (section: FieldSection) => {
     setCollapsedSections((prev) => {
       const next = new Set(prev);
-      if (next.has(section)) {
-        next.delete(section);
-      } else {
-        next.add(section);
-      }
+      if (next.has(section)) next.delete(section);
+      else next.add(section);
       return next;
     });
   };
+
+  const toggleViewMode = () =>
+    setViewMode((m) => (m === "stacked" ? "side-by-side" : "stacked"));
 
   return (
     <div className="flex h-screen flex-col">
@@ -42,9 +45,10 @@ export default function EditorPage() {
               <EditorForm
                 collapsedSections={collapsedSections}
                 onToggleSection={toggleSection}
+                viewMode={viewMode}
               />
             </div>
-            <RightRail />
+            <RightRail viewMode={viewMode} onToggleViewMode={toggleViewMode} />
           </div>
         </div>
       </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { ExternalLink, Eye, Trash2 } from "lucide-react";
 import {
   getLocaleCompletionStatus,
@@ -8,14 +10,22 @@ import {
   type LocalizedString,
 } from "@/data";
 
-export function RightRail() {
+interface RightRailProps {
+  viewMode: "stacked" | "side-by-side";
+  onToggleViewMode: () => void;
+}
+
+export function RightRail({ viewMode, onToggleViewMode }: RightRailProps) {
   return (
     <aside className="flex w-70 shrink-0 flex-col overflow-y-auto border-l border-muted bg-canvas">
       <Tabs />
       <EntryInfoSection />
       <ScheduleSection />
       <StagesSection />
-      <LocalizationsSection />
+      <LocalizationsSection
+        viewMode={viewMode}
+        onToggleViewMode={onToggleViewMode}
+      />
       <VersionsSection />
       <VariantsSection />
       <PreviewSection />
@@ -119,7 +129,13 @@ function StagesSection() {
   );
 }
 
-function LocalizationsSection() {
+function LocalizationsSection({
+  viewMode,
+  onToggleViewMode,
+}: {
+  viewMode: "stacked" | "side-by-side";
+  onToggleViewMode: () => void;
+}) {
   const localizedFields = productFieldDefinitions.filter((f) => f.isLocalized);
 
   function getCompletionCounts(localeCode: LocaleCode) {
@@ -139,9 +155,26 @@ function LocalizationsSection() {
     <section className="border-b border-muted px-4 py-4">
       <div className="flex items-center justify-between">
         <SectionHeader>Localizations</SectionHeader>
-        <button type="button" className="text-sm text-primary hover:underline">
-          Hide all
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onToggleViewMode}
+            title={
+              viewMode === "stacked"
+                ? "Switch to side-by-side view"
+                : "Switch to stacked view"
+            }
+            className="rounded px-1.5 py-0.5 text-sm font-medium text-muted hover:bg-surface-2 hover:text-strong"
+          >
+            {viewMode === "stacked" ? "↔" : "↕"}
+          </button>
+          <button
+            type="button"
+            className="text-sm text-primary hover:underline"
+          >
+            Hide all
+          </button>
+        </div>
       </div>
 
       <ul className="mt-3 space-y-2">
@@ -156,7 +189,6 @@ function LocalizationsSection() {
               key={locale.code}
               className="rounded-md border border-default p-3"
             >
-              {/* Locale identity row */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2">
                   <Eye className="h-4 w-4 shrink-0 text-muted" />
@@ -181,7 +213,6 @@ function LocalizationsSection() {
                 </div>
               </div>
 
-              {/* Completion bar - green/amber segments, gray background = missing */}
               <div
                 className="mt-2.5 flex h-1.5 w-full overflow-hidden rounded-full bg-surface-5"
                 role="progressbar"
@@ -198,10 +229,8 @@ function LocalizationsSection() {
                   className="bg-warning transition-all"
                   style={{ width: `${(partial / total) * 100}%` }}
                 />
-                {/* Remaining width stays surface-5 (background) - represents empty */}
               </div>
 
-              {/* Completion label */}
               <p className="mt-1.5 text-xs">
                 {allComplete ? (
                   <span className="text-success">
@@ -216,12 +245,7 @@ function LocalizationsSection() {
                         <span className="text-warning">{partial} partial</span>
                       </>
                     )}
-                    {empty > 0 && (
-                      <>
-                        {" · "}
-                        {empty} missing
-                      </>
-                    )}
+                    {empty > 0 && <> · {empty} missing</>}
                   </span>
                 )}
               </p>
@@ -271,7 +295,7 @@ function VariantsSection() {
 
 function PreviewSection() {
   return (
-    <section className="px-4 py-4">
+    <section className="border-b border-muted px-4 py-4">
       <SectionHeader>Preview</SectionHeader>
       <p className="mt-3 text-sm text-soft">
         Live preview your entry in a split screen as you edit in the content

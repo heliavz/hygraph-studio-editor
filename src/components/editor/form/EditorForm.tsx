@@ -27,11 +27,13 @@ import { TextInput } from "./TextInput";
 interface EditorFormProps {
   collapsedSections: Set<FieldSection>;
   onToggleSection: (section: FieldSection) => void;
+  viewMode: "stacked" | "side-by-side";
 }
 
 export function EditorForm({
   collapsedSections,
   onToggleSection,
+  viewMode,
 }: EditorFormProps) {
   return (
     <form className="mx-auto max-w-3xl space-y-10 px-8 py-8">
@@ -66,7 +68,7 @@ export function EditorForm({
               <div className="space-y-8">
                 {fields.map((field) => (
                   <FormField key={field.key} field={field}>
-                    {renderInput(field)}
+                    {renderInput(field, viewMode)}
                   </FormField>
                 ))}
               </div>
@@ -78,7 +80,10 @@ export function EditorForm({
   );
 }
 
-function renderInput(field: FieldDefinition) {
+function renderInput(
+  field: FieldDefinition,
+  viewMode: "stacked" | "side-by-side",
+) {
   const value = product[field.key];
 
   switch (field.type) {
@@ -89,6 +94,7 @@ function renderInput(field: FieldDefinition) {
           <LocalizedTextInput
             value={(value ?? {}) as LocalizedString}
             multiline={field.type === "richtext"}
+            viewMode={viewMode}
           />
         );
       }
@@ -122,8 +128,6 @@ function renderInput(field: FieldDefinition) {
       );
 
     case "reference": {
-      // Improvement - Single unified verb pair regardless of single
-      // vs. multiple, populated vs. empty, or which referenced model.
       const items = resolveReferenceItems(field);
       return (
         <ReferenceField
@@ -141,7 +145,6 @@ function renderInput(field: FieldDefinition) {
 
 function resolveReferenceItems(field: FieldDefinition): ReferenceItem[] {
   const value = product[field.key];
-
   switch (field.key) {
     case "colorIds": {
       const colors = resolveColors(value as string[]);
@@ -162,9 +165,6 @@ function resolveReferenceItems(field: FieldDefinition): ReferenceItem[] {
   }
 }
 
-// Baseline Hygraph displays a UUID/hash in a component's collapsed header.
-// We synthesize a human summary from the component's actual fields so
-// editors can scan for "what's in here?" without having to expand.
 function synthesizeComponentSummary(fieldKey: string, value: unknown): string {
   switch (fieldKey) {
     case "dimensions": {
