@@ -1,4 +1,8 @@
+"use client";
+
+import { ChevronDown, ChevronRight } from "lucide-react";
 import {
+  FIELD_SECTIONS,
   product,
   productFieldDefinitions,
   resolveCategory,
@@ -6,6 +10,7 @@ import {
   resolveColors,
   type Dimensions,
   type FieldDefinition,
+  type FieldSection,
   type LocalizedString,
   type Weight,
 } from "@/data";
@@ -19,14 +24,56 @@ import { NumberInput } from "./NumberInput";
 import { ReferenceField, type ReferenceItem } from "./ReferenceField";
 import { TextInput } from "./TextInput";
 
-export function EditorForm() {
+interface EditorFormProps {
+  collapsedSections: Set<FieldSection>;
+  onToggleSection: (section: FieldSection) => void;
+}
+
+export function EditorForm({
+  collapsedSections,
+  onToggleSection,
+}: EditorFormProps) {
   return (
-    <form className="mx-auto max-w-3xl space-y-8 px-8 py-8">
-      {productFieldDefinitions.map((field) => (
-        <FormField key={field.key} field={field}>
-          {renderInput(field)}
-        </FormField>
-      ))}
+    <form className="mx-auto max-w-3xl space-y-10 px-8 py-8">
+      {FIELD_SECTIONS.map((section) => {
+        const fields = productFieldDefinitions.filter(
+          (f) => f.section === section.id,
+        );
+        const isCollapsed = collapsedSections.has(section.id);
+        return (
+          <section
+            key={section.id}
+            id={`section-${section.id}`}
+            className="scroll-mt-4"
+          >
+            <button
+              type="button"
+              onClick={() => onToggleSection(section.id)}
+              aria-expanded={!isCollapsed}
+              className="mb-5 flex w-full items-center gap-2 border-b border-muted pb-2 text-left"
+            >
+              {isCollapsed ? (
+                <ChevronRight className="h-4 w-4 text-muted" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-muted" />
+              )}
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-strong">
+                {section.label}
+              </h2>
+              <span className="text-xs text-muted">{fields.length}</span>
+            </button>
+            {!isCollapsed && (
+              <div className="space-y-8">
+                {fields.map((field) => (
+                  <FormField key={field.key} field={field}>
+                    {renderInput(field)}
+                  </FormField>
+                ))}
+              </div>
+            )}
+          </section>
+        );
+      })}
     </form>
   );
 }
@@ -109,7 +156,7 @@ function resolveReferenceItems(field: FieldDefinition): ReferenceItem[] {
       return col ? [{ id: col.id, name: col.name }] : [];
     }
     case "relatedProductIds":
-      return []; // empty in fixture
+      return [];
     default:
       return [];
   }
