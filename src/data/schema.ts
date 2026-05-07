@@ -1,4 +1,4 @@
-import type { Product } from "./types";
+import { CURRENCIES, INVENTORY_STATUSES, type Product } from "./types";
 
 export type FieldType =
   | "text"
@@ -79,7 +79,7 @@ export const productFieldDefinitions: FieldDefinition[] = [
     label: "currency",
     type: "enum",
     section: "pricing",
-    enumOptions: ["EUR", "USD", "GBP", "SEK"],
+    enumOptions: CURRENCIES,
   },
   // Inventory
   {
@@ -87,7 +87,7 @@ export const productFieldDefinitions: FieldDefinition[] = [
     label: "inventoryStatus",
     type: "enum",
     section: "inventory",
-    enumOptions: ["IN_STOCK", "LOW_STOCK", "OUT_OF_STOCK", "DISCONTINUED"],
+    enumOptions: INVENTORY_STATUSES,
   },
   {
     key: "stockCount",

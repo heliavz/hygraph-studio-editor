@@ -15,12 +15,15 @@ export type LocalizedRichText = Partial<Record<LocaleCode, string>>;
 
 // Enums
 
-export type Currency = "EUR" | "USD" | "GBP" | "SEK";
-export type InventoryStatus =
-  | "IN_STOCK"
-  | "LOW_STOCK"
-  | "OUT_OF_STOCK"
-  | "DISCONTINUED";
+export const CURRENCIES = ["EUR", "USD", "GBP", "SEK"] as const;
+export type Currency = (typeof CURRENCIES)[number];
+export const INVENTORY_STATUSES = [
+  "IN_STOCK",
+  "LOW_STOCK",
+  "OUT_OF_STOCK",
+  "DISCONTINUED",
+] as const;
+export type InventoryStatus = (typeof INVENTORY_STATUSES)[number];
 export type Season = "SPRING" | "SUMMER" | "AUTUMN" | "WINTER" | "ALL_YEAR";
 
 // Components (embedded value objects)
