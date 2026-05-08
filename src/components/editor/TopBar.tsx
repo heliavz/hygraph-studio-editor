@@ -46,7 +46,7 @@ export function TopBar() {
           <ArrowUp className="h-3.5 w-3.5 text-muted" />
           Upgrade your plan
         </button>
-        <div className="flex w-full max-w-md items-center gap-2 rounded-md border border-default bg-canvas px-3 py-1.5 transition-colors hover:border-strong focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+        <div className="group flex w-full max-w-md items-center gap-2 rounded-md border border-default bg-canvas px-3 py-1.5 transition-colors hover:border-strong focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
           <Search className="h-4 w-4 text-muted" />
           <input
             type="text"
