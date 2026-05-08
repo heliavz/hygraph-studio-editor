@@ -6,6 +6,8 @@ import {
   ChevronRight,
   ExternalLink,
   Eye,
+  PanelRightClose,
+  PanelRightOpen,
   Trash2,
 } from "lucide-react";
 import {
@@ -20,11 +22,34 @@ import {
 interface RightRailProps {
   viewMode: "stacked" | "side-by-side";
   onToggleViewMode: () => void;
+  isCollapsed: boolean;
+  onToggleCollapsed: () => void;
 }
 
-export function RightRail({ viewMode, onToggleViewMode }: RightRailProps) {
+export function RightRail({
+  viewMode,
+  onToggleViewMode,
+  isCollapsed,
+  onToggleCollapsed,
+}: RightRailProps) {
+  if (isCollapsed) {
+    return (
+      <aside className="flex w-10 shrink-0 flex-col items-center border-l border-muted bg-canvas py-3">
+        <button
+          type="button"
+          onClick={onToggleCollapsed}
+          aria-label="Expand info panel"
+          className="rounded-md p-1.5 text-muted transition-colors hover:bg-surface-2 hover:text-strong hover:cursor-pointer"
+        >
+          <PanelRightOpen className="h-4 w-4" />
+        </button>
+      </aside>
+    );
+  }
+
   return (
-    <aside className="flex w-70 shrink-0 flex-col overflow-y-auto border-l border-muted bg-canvas">
+    <aside className="relative flex w-70 shrink-0 flex-col overflow-y-auto border-l border-muted bg-canvas">
+      <CollapseHandle onToggle={onToggleCollapsed} />
       <Tabs />
       <EntryInfoSection />
       <StagesSection />
@@ -38,18 +63,31 @@ export function RightRail({ viewMode, onToggleViewMode }: RightRailProps) {
   );
 }
 
+function CollapseHandle({ onToggle }: { onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label="Collapse info panel"
+      className="absolute left-2 top-2 z-10 rounded-md border border-default bg-canvas p-1 text-muted shadow-sm transition-colors hover:bg-surface-2 hover:text-strong hover:cursor-pointer"
+    >
+      <PanelRightClose className="h-3.5 w-3.5" />
+    </button>
+  );
+}
+
 function Tabs() {
   return (
-    <div className="flex shrink-0 border-b border-muted px-4">
+    <div className="flex shrink-0 border-b border-muted px-4 pl-12">
       <button
         type="button"
-        className="-mb-px border-b-2 border-primary px-3 py-3 text-xs font-semibold uppercase tracking-wider text-strong hover:cursor-pointer"
+        className="-mb-px border-b-2 border-primary px-3 py-3 text-xs font-semibold uppercase tracking-wider text-strong transition-colors hover:cursor-pointer"
       >
         Info
       </button>
       <button
         type="button"
-        className="-mb-px border-b-2 border-transparent px-3 py-3 text-xs font-semibold uppercase tracking-wider text-muted hover:text-strong hover:cursor-pointer"
+        className="-mb-px border-b-2 border-transparent px-3 py-3 text-xs font-semibold uppercase tracking-wider text-muted transition-colors hover:text-strong hover:cursor-pointer"
       >
         Comments
       </button>
@@ -147,13 +185,13 @@ function LocalizationsSection({
                 ? "Switch to side-by-side view"
                 : "Switch to stacked view"
             }
-            className="rounded px-1.5 py-0.5 text-sm font-medium text-muted hover:bg-surface-2 transition-colors hover:cursor-pointer"
+            className="rounded px-1.5 py-0.5 text-sm font-medium text-muted transition-colors hover:bg-surface-2 hover:cursor-pointer"
           >
             {viewMode === "stacked" ? "↔" : "↕"}
           </button>
           <button
             type="button"
-            className="text-sm text-primary hover:underline transition-colors hover:cursor-pointer"
+            className="text-sm text-primary transition-colors hover:underline hover:cursor-pointer"
           >
             Hide all
           </button>
@@ -170,11 +208,17 @@ function LocalizationsSection({
           return (
             <li
               key={locale.code}
-              className="rounded-md border border-default p-3"
+              className="rounded-md border border-default p-3 transition-colors hover:border-strong"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2">
-                  <Eye className="h-4 w-4 shrink-0 text-muted hover:bg-surface-2 rounded-md transition-colors hover:cursor-pointer" />
+                  <button
+                    type="button"
+                    aria-label={`Toggle visibility of ${locale.name}`}
+                    className="rounded p-1 text-muted transition-colors hover:bg-surface-2 hover:text-strong hover:cursor-pointer"
+                  >
+                    <Eye className="h-4 w-4 shrink-0" />
+                  </button>
                   <span className="truncate text-sm font-medium text-strong">
                     {locale.name}
                   </span>
@@ -188,10 +232,20 @@ function LocalizationsSection({
                   </span>
                   <button
                     type="button"
-                    aria-label={`Remove ${locale.name} localization`}
-                    className="rounded p-1 text-muted hover:bg-surface-2 hover:text-strong"
+                    disabled={locale.isDefault}
+                    aria-label={
+                      locale.isDefault
+                        ? `Cannot remove default locale ${locale.name}`
+                        : `Remove ${locale.name} localization`
+                    }
+                    title={
+                      locale.isDefault
+                        ? "The default locale can't be removed"
+                        : undefined
+                    }
+                    className="rounded p-1 text-muted transition-colors hover:bg-surface-2 hover:text-strong hover:cursor-pointer disabled:cursor-not-allowed disabled:text-disabled disabled:hover:bg-transparent disabled:hover:text-disabled"
                   >
-                    <Trash2 className="h-3.5 w-3.5 hover:bg-surface-2 rounded-md transition-colors hover:cursor-pointer" />
+                    <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
@@ -249,13 +303,13 @@ function UpgradesSection() {
         type="button"
         onClick={() => setIsExpanded((v) => !v)}
         aria-expanded={isExpanded}
-        className="flex w-full items-center justify-between hover:cursor-pointer"
+        className="flex w-full items-center justify-between transition-colors hover:cursor-pointer"
       >
         <SectionHeader>Upgrade to unlock</SectionHeader>
         {isExpanded ? (
-          <ChevronDown className="h-3.5 w-3.5 text-muted hover:cursor-pointer" />
+          <ChevronDown className="h-3.5 w-3.5 text-muted" />
         ) : (
-          <ChevronRight className="h-3.5 w-3.5 text-muted hover:cursor-pointer" />
+          <ChevronRight className="h-3.5 w-3.5 text-muted" />
         )}
       </button>
       {isExpanded && (
@@ -263,21 +317,30 @@ function UpgradesSection() {
           <li>
             <span className="font-medium text-strong">Schedule publishing</span>
             <span className="text-soft"> - </span>
-            <a href="#" className="text-primary hover:underline">
+            <a
+              href="#"
+              className="text-primary transition-colors hover:underline"
+            >
               upgrade
             </a>
           </li>
           <li>
             <span className="font-medium text-strong">Content versions</span>
             <span className="text-soft"> - </span>
-            <a href="#" className="text-primary hover:underline">
+            <a
+              href="#"
+              className="text-primary transition-colors hover:underline"
+            >
               upgrade
             </a>
           </li>
           <li>
             <span className="font-medium text-strong">Variants</span>
             <span className="text-soft"> - </span>
-            <a href="#" className="text-primary hover:underline">
+            <a
+              href="#"
+              className="text-primary transition-colors hover:underline"
+            >
               upgrade
             </a>
           </li>
@@ -298,7 +361,7 @@ function PreviewSection() {
 
       <a
         href="#"
-        className="mt-2 inline-flex items-center gap-1 text-sm text-primary hover:underline"
+        className="mt-2 inline-flex items-center gap-1 text-sm text-primary transition-colors hover:underline"
       >
         Configure Live Preview here <ExternalLink className="h-3 w-3" />
       </a>

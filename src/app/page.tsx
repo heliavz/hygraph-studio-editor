@@ -16,6 +16,7 @@ export default function EditorPage() {
   const [viewMode, setViewMode] = useState<"stacked" | "side-by-side">(
     "stacked",
   );
+  const [isRightRailCollapsed, setIsRightRailCollapsed] = useState(false);
 
   const toggleSection = (section: FieldSection) => {
     setCollapsedSections((prev) => {
@@ -28,6 +29,8 @@ export default function EditorPage() {
 
   const toggleViewMode = () =>
     setViewMode((m) => (m === "stacked" ? "side-by-side" : "stacked"));
+
+  const toggleRightRail = () => setIsRightRailCollapsed((v) => !v);
 
   return (
     <div className="flex h-screen flex-col">
@@ -48,7 +51,12 @@ export default function EditorPage() {
                 viewMode={viewMode}
               />
             </div>
-            <RightRail viewMode={viewMode} onToggleViewMode={toggleViewMode} />
+            <RightRail
+              viewMode={viewMode}
+              onToggleViewMode={toggleViewMode}
+              isCollapsed={isRightRailCollapsed}
+              onToggleCollapsed={toggleRightRail}
+            />
           </div>
         </div>
       </div>
