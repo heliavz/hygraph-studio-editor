@@ -36,7 +36,7 @@ export function EditorForm({
   viewMode,
 }: EditorFormProps) {
   return (
-    <form className="mx-auto max-w-3xl space-y-10 px-8 py-8">
+    <form className="mx-auto max-w-3xl space-y-12 px-8 py-8">
       {FIELD_SECTIONS.map((section) => {
         const fields = productFieldDefinitions.filter(
           (f) => f.section === section.id,
@@ -52,17 +52,19 @@ export function EditorForm({
               type="button"
               onClick={() => onToggleSection(section.id)}
               aria-expanded={!isCollapsed}
-              className="mb-5 flex w-full items-center gap-2 border-b border-muted pb-2 text-left hover:cursor-pointer"
+              className="group mb-6 flex w-full items-center gap-2.5 border-b border-default pb-3 text-left transition-colors hover:cursor-pointer"
             >
               {isCollapsed ? (
-                <ChevronRight className="h-4 w-4 text-muted hover:cursor-pointer" />
+                <ChevronRight className="h-4 w-4 text-muted transition-colors group-hover:text-strong" />
               ) : (
-                <ChevronDown className="h-4 w-4 text-muted hover:cursor-pointer" />
+                <ChevronDown className="h-4 w-4 text-muted transition-colors group-hover:text-strong" />
               )}
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-strong">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-strong">
                 {section.label}
               </h2>
-              <span className="text-xs text-muted">{fields.length}</span>
+              <span className="rounded bg-surface-5 px-1.5 py-0.5 text-xs font-medium text-soft">
+                {fields.length}
+              </span>
             </button>
             {!isCollapsed && (
               <div className="space-y-8">
