@@ -48,7 +48,7 @@ export function RightRail({
   }
 
   return (
-    <aside className="relative flex w-70 shrink-0 flex-col overflow-y-auto border-l border-muted bg-canvas">
+    <aside className="relative flex w-80 shrink-0 flex-col overflow-y-auto border-l border-muted bg-canvas">
       <CollapseHandle onToggle={onToggleCollapsed} />
       <Tabs />
       <EntryInfoSection />
