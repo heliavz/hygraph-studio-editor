@@ -42,7 +42,7 @@ export function EntryHeader() {
           <button
             type="button"
             disabled
-            className="cursor-not-allowed rounded-l-md bg-surface-5 px-3 py-1.5 text-sm font-medium text-disabled"
+            className="cursor-not-allowed rounded-l-md bg-violet-200 text-violet-400 px-3 py-1.5 text-sm font-medium"
           >
             Save
           </button>
@@ -50,7 +50,7 @@ export function EntryHeader() {
             type="button"
             disabled
             aria-label="Save options"
-            className="cursor-not-allowed rounded-r-md border-l border-default bg-surface-5 px-1.5 py-1.5 text-disabled"
+            className="cursor-not-allowed rounded-r-md border-l border-default bg-violet-200 text-violet-400 px-1.5 py-1.5"
           >
             <ChevronDown className="h-4 w-4" />
           </button>

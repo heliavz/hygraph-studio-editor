@@ -19,7 +19,7 @@ export const product: Product = {
   },
 
   longDescription: {
-    en: "The NORDLI 6-Drawer Dresser brings together considered Scandinavian craftsmanship and modern modularity. Each drawer glides on full-extension runners with soft-close. The frame is solid Nordic pine with a hand-finished walnut veneer that develops a richer patina over time. Designed to stack vertically or arrange horizontally, NORDLI adapts to small bedrooms, expansive lofts, or shared spaces.",
+    en: `<h1>NORDLI 6-Drawer Dresser</h1><p>The NORDLI 6-Drawer Dresser brings together considered Scandinavian craftsmanship and modern modularity. Each drawer glides on <strong>full-extension runners</strong> with soft-close.</p><ul><li>Solid Nordic pine frame with hand-finished walnut veneer</li><li>Stackable vertically or arranged horizontally</li><li>Designed for small bedrooms, expansive lofts, or shared spaces</li></ul><p>The veneer develops a richer patina over time, making each piece increasingly distinct.</p>`,
     // de missing - most expensive translation gap, drives ❌ on completion dot
   },
 

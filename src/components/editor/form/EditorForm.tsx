@@ -94,6 +94,7 @@ function renderInput(
           <LocalizedTextInput
             value={(value ?? {}) as LocalizedString}
             multiline={field.type === "richtext"}
+            richText={field.type === "richtext"}
             viewMode={viewMode}
           />
         );
