@@ -132,36 +132,38 @@ The output lands in `out/` and is deployed by the GitHub Actions workflow on eve
 
 ## Repository structure
 
+```text
 src/
 ├── app/
-│   ├── page.tsx                     # Editor page, owns collapsed sections + view mode state
-│   ├── layout.tsx                   # Root layout
-│   └── globals.css                  # Tailwind directives and brand design tokens
+│   ├── page.tsx                   # Editor page, owns collapsed sections + view mode state
+│   ├── layout.tsx                 # Root layout
+│   └── globals.css                # Tailwind directives and brand design tokens
 ├── components/
 │   └── editor/
-│   ├── TopBar.tsx                   # Top navigation bar with workspace switcher and search
-│   ├── LeftSidebar.tsx              # App nav (Home, Schema, Content, Assets, API Playground)
-│   ├── EntryHeader.tsx              # Entry breadcrumb, Save and Publish buttons
-│   ├── FieldOutline.tsx             # Collapsible field outline with locale completion dots
-│   ├── RightRail.tsx                # Info panel, localizations, stages, upgrade section
-│   └── form/
-│   ├── EditorForm.tsx               # Form shell, section grouping, collapse logic
-│   ├── FormField.tsx                # Field wrapper with label and type pills
-│   ├── LocalizedTextInput.tsx       # Text and rich text fields with locale chips
-│   ├── TextInput.tsx                # Single-locale text input
-│   ├── NumberInput.tsx              # Numeric input
-│   ├── EnumSelect.tsx               # Dropdown for enum fields
-│   ├── BooleanToggle.tsx            # Toggle for boolean fields
-│   ├── AssetField.tsx               # Asset reference field
-│   ├── ComponentField.tsx           # Component field with human-readable summary
-│   └── ReferenceField.tsx           # Reference field with unified Link/Create verbs
+│       ├── TopBar.tsx             # Top navigation bar with workspace switcher and search
+│       ├── LeftSidebar.tsx        # App nav (Home, Schema, Content, Assets, API Playground)
+│       ├── EntryHeader.tsx        # Entry breadcrumb, Save and Publish buttons
+│       ├── FieldOutline.tsx       # Collapsible field outline with locale completion dots
+│       ├── RightRail.tsx          # Info panel, localizations, stages, upgrade section
+│       └── form/
+│           ├── EditorForm.tsx     # Form shell, section grouping, collapse logic
+│           ├── FormField.tsx      # Field wrapper with label and type pills
+│           ├── LocalizedTextInput.tsx  # Text and rich text fields with locale chips
+│           ├── TextInput.tsx      # Single-locale text input
+│           ├── NumberInput.tsx    # Numeric input
+│           ├── EnumSelect.tsx     # Dropdown for enum fields
+│           ├── BooleanToggle.tsx  # Toggle for boolean fields
+│           ├── AssetField.tsx     # Asset reference field
+│           ├── ComponentField.tsx # Component field with human-readable summary
+│           └── ReferenceField.tsx # Reference field with unified Link/Create verbs
 └── data/
-    ├── types.ts                       # Product, Locale, and field type definitions
-    ├── schema.ts                      # Field definitions, sections, and field ordering
-    ├── product.ts                     # NORDLI fixture data (intentionally partial German)
-    ├── references.ts                  # Color, Category, Collection reference fixtures
-    ├── completion.ts                  # Locale completion status helpers
-    └── index.ts                       # Barrel export
+    ├── types.ts                   # Product, Locale, and field type definitions
+    ├── schema.ts                  # Field definitions, sections, and field ordering
+    ├── product.ts                 # NORDLI fixture data (intentionally partial German)
+    ├── references.ts              # Color, Category, Collection reference fixtures
+    ├── completion.ts              # Locale completion status helpers
+    └── index.ts                  # Barrel export
+```
 
 ---
 
